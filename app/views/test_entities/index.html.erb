@@ -1,0 +1,39 @@
+<h1>Test Entities</h1>
+
+<table>
+  <tr>
+    <td>id</td>
+    <td>email</td>
+    <td>remember_created_at</td>
+    <td>sign_in_count</td>
+    <td>current_sign_in_at</td>
+    <td>current_sign_in_ip</td>
+    <td>failed_attempts</td>
+    <td>locked_at</td>
+    <td>provider</td>
+    <td>uid</td>
+    <td>reset_password_token</td>
+    <td>reset_password_sent_at</td>
+    <td>description</td>
+  </tr>
+  <% @entities.each do |entity| %>
+    <tr>
+      <td><%= entity.id %></td>
+      <td><%= entity.email %></td>
+      <td><%= entity.remember_created_at %></td>
+      <td><%= entity.sign_in_count %></td>
+      <td><%= entity.current_sign_in_at %></td>
+      <td><%= entity.current_sign_in_ip %></td>
+      <td><%= entity.failed_attempts %></td>
+      <td><%= entity.locked_at %></td>
+      <td><%= entity.provider %></td>
+      <td><%= entity.uid %></td>
+      <td><%= entity.reset_password_token %></td>
+      <td><%= entity.reset_password_sent_at %></td>
+      <td><%= entity.description %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'new entity', new_test_entity_path %>
+<%= link_to 'dashboard', root_path %>
