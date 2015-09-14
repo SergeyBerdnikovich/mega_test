@@ -17,6 +17,7 @@ set :log_level, :debug
 set(:config_files, %w(
   database.example.yml
   secrets.example.yml
+  shards.example.yml
   unicorn.rb
   unicorn_init.sh
   nginx.conf
@@ -43,10 +44,7 @@ set(:executable_config_files, %w(
   unicorn_init.sh
 ))
 
-# Default value for :pty is false
-# set :pty, true
-
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/shards.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 namespace :deploy do

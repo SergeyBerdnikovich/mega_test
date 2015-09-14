@@ -21,8 +21,14 @@ before_exec do |server|
 end
 
 before_fork do |server, worker|
-  defined?(ActiveRecord::Base) and
+  if defined?(ActiveRecord::Base)
+    ActiveRecord::Base.connection_proxy.instance_variable_get(:@shards).each do |shard, connection_pool|
+      connection_pool.disconnect!
+    end
+
     ActiveRecord::Base.connection.disconnect!
+  end
+
   if File.exists?(pidfile_old) && server.pid != pidfile_old
     begin
       Process.kill('QUIT', File.read(pidfile_old).to_i)
@@ -32,6 +38,8 @@ before_fork do |server, worker|
 end
 
 after_fork do |server, worker|
-  defined?(ActiveRecord::Base) and
+  if defined?(ActiveRecord::Base)
     ActiveRecord::Base.establish_connection
+    ActiveRecord::Base.connection_proxy.instance_variable_get(:@shards).each {|k,v| v.clear_reloadable_connections! }
+  end
 end
