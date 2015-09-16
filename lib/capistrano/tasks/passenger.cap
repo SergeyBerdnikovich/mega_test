@@ -1,0 +1,23 @@
+namespace :passenger do
+  task :start do
+    on roles(:app), except: { no_release: true } do
+      execute "cd #{current_path} && #{fetch(:passenger_cmd)} start -e #{fetch(:rails_env)} -p #{fetch(:passenger_port)} -d"
+    end
+  end
+
+  task :stop do
+    on roles(:app), except: { no_release: true } do
+      execute "cd #{current_path} && #{fetch(:passenger_cmd)} stop -p #{fetch(:passenger_port)}"
+    end
+  end
+
+  task :restart do
+    on roles(:app), except: { no_release: true } do
+      if test("[ -f #{current_path}/tmp/pids/passenger.#{fetch(:passenger_port)}.pid ]")
+        execute "cd #{current_path} && #{fetch(:passenger_cmd)} stop -p #{fetch(:passenger_port)}"
+      end
+
+      execute "cd #{current_path} && #{fetch(:passenger_cmd)} start -e #{fetch(:rails_env)} -p #{fetch(:passenger_port)} -d"
+    end
+  end
+end

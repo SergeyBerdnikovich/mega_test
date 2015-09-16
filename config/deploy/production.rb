@@ -6,10 +6,10 @@
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
-server '192.168.1.6', user: 'atomu', roles: %w{web app db}
+server '192.168.1.7', user: 'atom', roles: %w{web app db}
 
 set :stage,  :production
-set :branch, 's.b-passenger-module-for-nginx-instead-unicorn'
+set :branch, 's.b-passenger-standalone-instead-module-for-nginx'
 set :rails_env, :production
 
 # role-based syntax
